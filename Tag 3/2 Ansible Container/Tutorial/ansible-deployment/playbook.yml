@@ -1,0 +1,59 @@
+  - gather_facts: false
+    tasks:
+      - docker_service:
+            definition:
+                services: &id001
+                    web:
+                        environment:
+                          - DEBUG=1
+                        image: centos:7
+                        command:
+                          - /usr/bin/dumb-init
+                          - /usr/sbin/apache2ctl
+                          - -D
+                          - FOREGROUND
+                        ports:
+                          - 80:80
+                version: '2'
+            state: present
+            project_name: Tutorial
+        tags:
+          - start
+      - docker_service:
+            definition:
+                services: *id001
+                version: '2'
+            state: present
+            project_name: Tutorial
+            restarted: true
+        tags:
+          - restart
+      - docker_service:
+            definition:
+                services: *id001
+                version: '2'
+            state: present
+            project_name: Tutorial
+            stopped: true
+        tags:
+          - stop
+      - docker_service:
+            definition:
+                services: *id001
+                version: '2'
+            state: absent
+            project_name: Tutorial
+            remove_volumes: yes
+        tags:
+          - destroy
+      - docker_image:
+            state: absent
+            force: yes
+            name: centos:7
+        tags: destroy
+      - docker_image:
+            state: absent
+            force: yes
+            name: tutorial-conductor:latest
+        tags: destroy
+    hosts: localhost

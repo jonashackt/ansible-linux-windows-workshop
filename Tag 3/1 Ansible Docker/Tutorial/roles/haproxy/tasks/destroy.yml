@@ -1,0 +1,12 @@
+- block:
+  - name: Lösche Container
+    docker_container:
+      name: "haproxy"
+      state: absent
+
+  - name: Lösche ansible.cfg
+    file:
+      path: "{{config_path}}/haproxy.cfg"
+      state: absent
+  tags: destroy
+  when: just_created is undefined

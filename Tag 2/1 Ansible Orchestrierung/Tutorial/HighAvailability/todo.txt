@@ -1,0 +1,17 @@
+1. Alles mit einem Playbook-Aufruf erstellen
+2. Loadbalancer Port konfigurierbar machen
+3. Hallo Bonn! --> Hallo von <ip>
+4. Automatisch alle Hosts der Gruppe webserver in haproxy hinzufügen "groups[]"
+
+
+========================================================
+
+1. Rolling Update durchführen
+Pre_task: Stop apache2 -> pause 30sec
+Post_task: Pause-> 30sec
+Repeat.sh ausführen
+
+========================================================
+
+1. Tests erzeugen
+2. Tags verwenden

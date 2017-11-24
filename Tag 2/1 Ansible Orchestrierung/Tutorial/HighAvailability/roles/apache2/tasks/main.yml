@@ -1,0 +1,19 @@
+- name: debug name
+  debug: msg="{{name}}"
+
+- name: debug
+  debug: msg="{{hostvars["52.29.150.255"].name}}"
+
+- name: Update apt cache.
+  apt: update_cache=yes cache_valid_time=3600
+
+- name: Installiere apache2 in aktueller Version
+  apt: name=apache2 state=latest
+
+- name: Setze neue index.html
+  copy: src=index.html dest=/var/www/html/index.html
+  notify:
+  - apache2 Neustart
+
+- name: Starte apache2
+  service: name=apache2 state=started enabled=yes

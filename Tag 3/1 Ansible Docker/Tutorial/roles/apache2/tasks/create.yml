@@ -1,0 +1,32 @@
+- block:
+  - set_fact:
+      just_created: true
+
+  - name: Erstelle Container
+    docker_container:
+      name: "{{ name }}"
+      image: apache2custom:{{version}}
+      state: started
+      env:
+        NAME: "{{ name }}"
+    register: container_info
+
+  - name: Erstelle aktuelle Container-Daten
+    set_fact:
+      container:
+        name: "{{ container_info.ansible_facts.ansible_docker_container.Config.Hostname }}"
+        ip: "{{container_info.ansible_facts.ansible_docker_container.NetworkSettings.IPAddress}}"
+
+  - debug: msg="Container-IP is {{ container.ip }}"
+  - debug: msg="Container-Name is {{ container.name }}"
+
+  - name: Füge Container-Daten zur Webservers-List hinzu
+    set_fact: webservers="{{webservers}} + [{{ container }}]"
+    when: webservers is defined
+
+  - name: Füge Container-Daten zur leeren Webservers-List hinzu
+    set_fact: webservers="[{{ container }}]"
+    when: webservers is undefined
+
+  - debug: msg="{{webservers}}"
+  tags: create

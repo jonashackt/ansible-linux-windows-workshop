@@ -1,0 +1,18 @@
+version: '2'
+services:
+  apache2_ffm:
+    image: apache2:1.0.0
+    ports:
+     - "8080:80"
+  apache2_nyc:
+     image: apache2:1.0.1
+     ports:
+      - "8081:80"
+  loadbalancer:
+      build: haproxy/.
+      ports:
+        - "80:80"
+      volumes:
+        - ./haproxy:/usr/local/etc/haproxy/
+  #redis:
+  #  image: "redis:alpine"

@@ -1,0 +1,1 @@
+web ansible_host="ordereddict([(u'environment', ['DEBUG=1']), (u'command', ['/usr/bin/dumb-init', '/usr/sbin/apache2ctl', '-D', 'FOREGROUND']), (u'from', u'centos:7'), (u'ports', ['80:80']), ('defaults', ordereddict([]))])" ansible_python_interpreter="/_usr/bin/python"

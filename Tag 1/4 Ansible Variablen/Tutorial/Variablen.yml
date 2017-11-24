@@ -1,0 +1,5 @@
+- hosts: all
+  vars:
+    region: "Junge"
+  tasks:
+  - debug: msg={{region}}

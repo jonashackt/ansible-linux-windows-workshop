@@ -1,0 +1,12 @@
+- hosts: all
+  tasks:
+  - name: Erstelle einen Container
+    docker_container:
+      name: webserver
+      image: httpd:2.4
+      state: started
+      ports:
+      - "80:80"
+    register: c_result
+
+  - debug: msg="{{c_result}}"

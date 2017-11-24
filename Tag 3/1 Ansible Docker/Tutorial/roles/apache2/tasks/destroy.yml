@@ -1,0 +1,8 @@
+- block:
+  - name: Lösche Container
+    docker_container:
+      name: "{{ name }}"
+      image: apache2:{{version}}
+      state: absent
+  tags: destroy
+  when: just_created is undefined

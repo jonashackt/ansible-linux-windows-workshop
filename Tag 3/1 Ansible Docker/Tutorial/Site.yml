@@ -1,0 +1,12 @@
+- hosts: all
+  roles:
+    - {role: apache2, version: "latest", name: "ffm"}
+    - {role: apache2, version: "latest", name: "dus"}
+    - {role: apache2, version: "latest", name: "cgn"}
+    - {role: apache2, version: "latest", name: "ffm1"}
+    - {role: apache2, version: "latest", name: "dus1"}
+    - {role: apache2, version: "latest", name: "cgn1"}
+    - {role: apache2, version: "latest", name: "ffm2"}
+    - {role: apache2, version: "latest", name: "dus2"}
+    - {role: apache2, version: "latest", name: "cgn2"}
+    - {role: haproxy, version: "latest", config_path: "/Users/jannikhuels/Desktop"}

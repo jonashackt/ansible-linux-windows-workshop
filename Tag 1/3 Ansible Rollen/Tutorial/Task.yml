@@ -1,0 +1,5 @@
+- hosts: 52.59.186.162
+  become: true
+  roles:
+  - Common
+  - Apache2

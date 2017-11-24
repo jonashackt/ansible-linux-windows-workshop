@@ -1,0 +1,3 @@
+- hosts: all
+  tasks:
+  - copy: src=Secrets.yml dest=/Users/jannikhuels/Desktop

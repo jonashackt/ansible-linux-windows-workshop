@@ -1,0 +1,56 @@
+#ansible-playbook Bootstrap.yml -i "52.59.186.162," -u ubuntu --private-key Keys/ansible.pem
+---
+- name: Bootstrap
+  hosts: all
+  become: true
+  tasks:
+  - name: Gruppe der ansible Nutzer erzeugen
+    group:
+      name: ansible
+      state: present
+
+  - name: Nutzer ansible erzeugen
+    user: >
+      name=ansible
+      shell=/bin/bash
+      groups=ansible
+      append=yes
+      generate_ssh_key=yes
+      ssh_key_bits=2048
+      state=present
+    notify: Reboot
+
+  - name: Lokalen public key für SSH Zugriff hinterlegen
+    authorized_key:
+      user: "ansible"
+      key: "{{ lookup('file', 'Keys/id_rsa.pub') }}"
+      state: present
+    notify: Reboot
+
+  - name: Ansible user zu sudoers hinzufügen
+    lineinfile:
+      dest: /etc/sudoers
+      regexp: "ansible ALL"
+      line: "ansible ALL=(ALL)  NOPASSWD:ALL"
+      state: present
+    notify: Reboot
+
+  - name: Kein SSH Zugriff für User root
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      regexp: "^PermitRootLogin"
+      line: "PermitRootLogin no"
+      state: present
+    notify: Reboot
+
+  - name: Kein SSH Zugriff per Password
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      regexp: "^PasswordAuthentication"
+      line: "PasswordAuthentication no"
+      state: present
+    notify: Reboot
+
+  handlers:
+  - name: Reboot
+    command: /sbin/reboot

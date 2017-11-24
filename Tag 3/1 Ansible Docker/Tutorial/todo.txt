@@ -1,0 +1,10 @@
+1. Die IP und Namen des erstellten webservers ausgeben!
+2. Erstellten Webserver testen (Zugriff über Browser)
+3. Mehrere Webserver erstellen
+4. IP und Namen aller webserver ausgeben
+5. Löschen der Umgebung
+
+6. Playbook für HAProxy erstellen!
+7. HAProxy löschen
+
+8. Stage > Test > Prod für Webserver durchspielen

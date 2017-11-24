@@ -1,0 +1,7 @@
+
+haproxy_app_name: mywebapp
+haproxy_mode: http
+haproxy_algorithm: roundrobin
+haproxy_backend_servers:
+  - {name: server1, ip: 52.59.186.162, port: 80, paramstring: cookie A check}
+  - {name: server2, ip: 52.29.150.255, port: 80, paramstring: cookie A check}

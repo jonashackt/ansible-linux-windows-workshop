@@ -1,0 +1,101 @@
+- name: Check if jdk already exists
+  stat:
+    path: "{{jdk_dest_path}}{{jdk}}"
+  register: jdk_exists
+
+- name: Update apt cache.
+  apt: update_cache=yes cache_valid_time=3600
+
+- name: Add openjdk apt repo
+  apt_repository:
+    repo: "ppa:openjdk-r/ppa"
+    state: present
+
+- name: Install openjdk8
+  apt: name=openjdk-8-jdk state=present
+
+- name: Install systemd
+  apt: name=systemd state=present
+
+- name: Uncompress JDK to {{jdk_dest_path}}
+  unarchive: src={{ jdk_src_path }}{{ jdk_download_name }}.tar.gz dest={{jdk_dest_path}} group=ansible owner=ansible
+  when: jdk_exists.stat.exists == false
+
+- name: Create jdk1.8 symlink
+  file: src="{{jdk_dest_path}}{{jdk}}" dest={{jdk_dest_path}}jdk1.8 state=link owner=ansible group=ansible
+
+- name: Add Group for Keycloak User
+  group: name={{ keycloak_group }} state=present
+  become: true
+
+- name: Create keycloak user
+  user: name={{ keycloak_user }} group={{ keycloak_group }} state=present
+  become: true
+
+- name: Check if jdk keycloak exists
+  stat:
+    path: "{{ keycloak_install_path }}keycloak-{{ keycloak_version }}"
+  register: keycloak_exists
+
+- debug: msg="{{ keycloak_install_path }}keycloak-{{ keycloak_version }}"
+
+- name: unarchive keycloak
+  unarchive: src={{keycloak_source_url}}keycloak-{{ keycloak_version }}.tar.gz dest={{ keycloak_install_path }} owner={{ keycloak_user }} group={{ keycloak_group }}  mode=0755 copy=no
+  when: keycloak_exists.stat.exists == false
+  notify: create admin account
+
+- name: Create Symlink to Keycloak Version
+  file: path={{ keycloak_install_path }}keycloak src={{ keycloak_install_path }}keycloak-{{ keycloak_version }} state=link force=yes
+
+- name: keycloak log directory
+  file: dest={{ keycloak_install_path }}keycloak/standalone/log
+        mode=0755
+        owner={{ keycloak_user }}
+        group={{ keycloak_group }}
+        state=directory
+
+- name: keycloak data directory
+  file: dest={{ keycloak_install_path }}keycloak/standalone/data
+        mode=0755
+        owner={{ keycloak_user }}
+        group={{ keycloak_group }}
+        state=directory
+
+- name: keycloak tmp directory
+  file: dest={{ keycloak_install_path }}keycloak/standalone/tmp
+        mode=0755
+        owner={{ keycloak_user }}
+        group={{ keycloak_group }}
+        state=directory
+
+- name: keycloak deploy directory
+  file: dest={{ keycloak_install_path }}keycloak/standalone/deployments
+        mode=0755
+        owner={{ keycloak_user }}
+        group={{ keycloak_group }}
+        state=directory
+
+- name: make keycloak configuration directory readable
+  file: dest={{ keycloak_install_path }}keycloak/standalone/configuration
+        mode=0755
+        owner={{ keycloak_user }}
+        group={{ keycloak_group }}
+        state=directory
+        recurse=yes
+
+- name: Start keycloak
+  command: /opt/keycloak/bin/standalone.sh -b {{ hostvars[inventory_hostname]['ansible_eth0']['ipv4']['address'] }} --server-config=standalone.xml -Djboss.bind.address.private={{ hostvars[inventory_hostname]['ansible_eth0']['ipv4']['address'] }}
+  environment:
+    JAVA_HOME: "{{jdk_dest_path}}jdk1.8"
+
+#- name: keycloak systemd setup
+#  template:
+#    owner=root group=root mode=0644
+#    src=keycloak.service
+#    dest=/etc/systemd/system/keycloak.service
+
+#- name: Ensure that keycloak is started
+#  service:
+#    name: keycloak
+#    state: restarted
+#    enabled: yes

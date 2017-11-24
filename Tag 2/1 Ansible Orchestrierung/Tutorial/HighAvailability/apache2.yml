@@ -1,0 +1,12 @@
+- hosts: webserver
+  become: true
+  pre_tasks:
+    - name: Hello
+      shell: echo 'hello'
+
+  roles:
+    - apache2
+
+  post_tasks:
+    - name: Goodbye
+      shell: echo 'goodbye'

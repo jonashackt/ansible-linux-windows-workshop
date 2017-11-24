@@ -1,0 +1,20 @@
+- name: Update apt cache.
+  apt: update_cache=yes cache_valid_time=3600
+
+- name: Ensure HAProxy is installed.
+  apt: name=haproxy state=installed
+
+- name: Update HaProxy configuration
+  template: src=haproxy.cfg.j2 dest=/etc/haproxy/haproxy.cfg
+  register: result
+  notify: Restart haproxy
+  tags: haproxy_config
+
+- name: Template result
+  debug: msg="{{result}}"
+
+- name: Set haproxy ENABLED
+  copy: src=haproxy dest=/etc/default/haproxy
+
+- name: Start haproxy
+  service: name=haproxy state=started

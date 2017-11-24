@@ -1,0 +1,21 @@
+- block:
+  - set_fact:
+      just_created: true
+
+  - debug: msg="Created {{ webservers }}"
+
+  - name: Schreibe haproxy Konfiguration
+    template:
+      src: haproxy.cfg.j2
+      dest: "{{ config_path }}/haproxy.cfg"
+
+  - name: Erstelle Container
+    docker_container:
+      name: "haproxy"
+      image: haproxy:{{version}}
+      state: started
+      ports:
+        - "80:80"
+      volumes:
+        - "{{config_path}}:/usr/local/etc/haproxy/"
+  tags: create

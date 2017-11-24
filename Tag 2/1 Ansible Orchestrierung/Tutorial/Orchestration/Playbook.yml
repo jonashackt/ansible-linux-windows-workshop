@@ -1,0 +1,7 @@
+---
+- name: Test
+  hosts: all
+  remote_user: ansible
+  tasks:
+  - name: Environment?
+    debug: msg="{{env}}"
