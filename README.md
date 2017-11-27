@@ -55,13 +55,60 @@ vagrant box add --name windows_2016_ansible_virtualbox  windows_2016_ansible_vir
 #### Die Ansible Control Machine
 
 Mac-, Linux- & Windows 10-User könn(t)en ohne eine extra virtuelle Maschine loslegen - einfach Ansible installieren und fertig. ABER: Windows-User wären ausgesperrt!
+Da die Schulung aber für alle Nutzer eine einheitliche Trainingsumgebung bereitstellen will, wird die Ansible Control Machine zusätzlich bereitgestellt. Dazu die
+`Microsoft Edge on Win10 (x64) Stable (16.xxx)` __Vagrant Box__ hier herunterladen https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/#downloads und in Ordner `/day01/00_Infrastructure-as-Code/ControlMachine` entpacken (oder direkt vom USB-Stick des Trainers).
 
-> Da die Schulung aber für alle Nutzer eine einheitliche Trainingsumgebung bereitstellen will, wird die Ansible Control Machine zusätzlich bereitgestellt
+Die Vagrant Box ebenfalls der lokalen Vagrantinstallation hinzufügen:
 
-`Microsoft Edge on Windows 10 Stable (15.xxx)` hier herunterladen https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/#downloads (oder direkt vom USB-Stick des Trainers)
+```
+vagrant box add "MSEdge - Win10.box" --name "windows10"
+```
 
+Nun folgt der `vagrant up` 
 
+> Leider vergisst Microsoft bei der eigenen Vagrant Box ein paar grundlegende Dinge, damit diese auch ohne Probleme funktioniert. Denn wie man vielleicht schon bemerkt hat, führt ein unvoreingenommenes vagrant up zu einem „Timed out while waiting for the machine to boot […]“. Das liegt an der Konfiguration der Network List Management Policies, die einen Zugriff per Windows Remote Management (WinRM) verhindern. Doch dem kann man schnell Abhilfe verschaffen. Dazu einmalig nach dem ersten Start der Vagrant Box in die Local Security Policys gehen und darin in die Network List Management Policies wechseln. Dort auf Network klicken und im Tab Network Location den Location type auf private und die User permissions auf User can change location setzen.  Nun sollte das vagrant up so funktionieren wie gedacht. Es wäre natürlich schön, wenn uns diese Arbeit schon Microsoft abnehmen würde.
 
+Wen das Englische Tastaturlayout stört: `language` tippen, runter scrollen und unter __Related settings__ `Additional date, time, & regional settings`. Dann auf `Change input methods`unter __Language__ usw. sudo ...
+
+##### Control Machine vorbereiten
+
+Siehe auch https://msdn.microsoft.com/en-us/commandline/wsl/install-win10
+
+Zuerst auf einer Administrativen PowerShell den folgenden Befehl ausführen:
+
+```
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+```
+
+Danach in den Windows Store gehen und nach Ubuntu suchen. Dieses per __GET__ installieren. Danach auf __LAUNCH__.
+
+![Installing_Ubuntu_on_Control_Machine.png](https://github.com/jonashackt/ansible-linux-windows-workshop/blob/master/Installing_Ubuntu_on_Control_Machine.png)
+
+Nun einen Nutzernamen und Passwort vergeben.
+
+Danach einmal das Package Management updaten:
+
+```
+sudo apt-get update
+```
+
+##### Ansible auf der Control Machine installieren
+
+Siehe http://docs.ansible.com/ansible/latest/intro_installation.html#latest-releases-via-apt-ubuntu
+
+```
+sudo apt-add-repository ppa:ansible/ansible
+sudo apt-get update
+sudo apt-get install ansible
+```
+
+![Installing_Ansible_on_Control_Machine.png](https://github.com/jonashackt/ansible-linux-windows-workshop/blob/master/Installing_Ansible_on_Control_Machine.png)
+
+Danach noch schnell Git auf der Control Machine installieren - dafür am besten Chocolatey vorher installieren (siehe https://chocolatey.org/install). Dazu in der Control Machine auf dieses Repo hier gehen: https://github.com/jonashackt/ansible-linux-windows-workshop und den Powershell-Befehl ausführen:
+
+```
+Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+```
 
 
 Sobald die Maschinen bereitstehen und von Ansible angesprochen werden können, soll ein durchgängiges Anwendungsbeispiel aufgebaut werden.

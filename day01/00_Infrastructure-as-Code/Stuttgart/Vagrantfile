@@ -8,6 +8,6 @@ Vagrant.configure("2") do |config|
      virtualbox.gui = true
      virtualbox.memory = 2048
      virtualbox.cpus = 4
-   end
+  end
 
 end
