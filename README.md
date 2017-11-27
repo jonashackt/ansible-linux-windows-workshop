@@ -11,7 +11,7 @@ Im ersten Teil werden wir die Basics zu Ansible kennenlernen und Ad-Hoc erste Ta
 
 ## Vorraussetzungen:
 
-#### a) Installationen von Virtual Box, Vagrant, Git, Maven
+#### a) Installationen von VirtualBox, Packer, Vagrant, Ansible, Git, Maven
 
 ###### auf dem Mac via [brew](https://brew.sh/index_de.html)
 * `brew cask install virtualbox` 
@@ -20,6 +20,9 @@ Im ersten Teil werden wir die Basics zu Ansible kennenlernen und Ad-Hoc erste Ta
 * `brew install git`
 
 ###### auf Windows via [chocolatey](https://chocolatey.org/)
+
+// TODO: Windows 10 - Subsystem? oder Vagrant Box??
+
 * `choco install virtualbox`
 * `choco install vagrant`
 * `choco install maven`
@@ -27,17 +30,33 @@ Im ersten Teil werden wir die Basics zu Ansible kennenlernen und Ad-Hoc erste Ta
 
 ###### unter Linux - einfach den jeweiligen Package Manager verwenden
 
+Bspw.
+* `apt-get install git`
+
 
 #### Windows Server 2016 Vagrant Box:
 
-Ein aktuelles Windows liegt leider nicht einfach auf vagrantup.com bereit. Wie man sich trotzdem legal eine Testumgebung mit Windows Server 2016 in einer VagrantBox mit Hilfe des DevOps-Tools [Packer](https://www.packer.io/) bereitstellt, beschreibt [dieser Blogartikel](https://blog.codecentric.de/en/2017/04/ansible-docker-windows-containers-spring-boot/). Um allerdings mit der Erstellung einer VagrantBox im Workshop keine Zeit zu verlieren, erstellt der Workshopleiter einmal frisch eine solche VagrantBox mit dem Namen:
+Ein aktuelles Windows liegt leider nicht einfach auf vagrantup.com bereit. Wie man sich trotzdem legal eine Testumgebung mit Windows Server 2016 in einer VagrantBox mit Hilfe des DevOps-Tools [Packer](https://www.packer.io/) bereitstellt, beschreibt [dieser Blogartikel](https://blog.codecentric.de/en/2017/04/ansible-docker-windows-containers-spring-boot/).
 
-`windows_2016_docker_virtualbox.box`
+Für die Schulung sind nur die folgenden Schritte notwendig:
 
-Diese wird dann jedem Teilnehmer zur Verfügung gestellt. Sobald sie lokal vorliegt, muss sie Vagrant bekannt gemacht werden:
+###### 1.) ISO herunterladen
+
+https://www.microsoft.com/de-de/evalcenter/evaluate-windows-server-2016 (registration needed)
+
+###### 2.) Vagrant Box mit Packer bauen
+
+Das Schulungs-GitHub Repository clonen: [ansible-linux-windows-workshop](https://github.com/jonashackt/ansible-linux-windows-workshop) und im Ordner `/day01/00_Infrastructure-as-Code/AnsibleWsWindows` folgenden Befehl ausführen:
 
 ```
-vagrant init windows_2016_docker_virtualbox.box 
+packer build -var iso_url=14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO -var iso_checksum=70721288bbcdfe3239d8f8c0fae55f1f windows_2016_ansible.json
+```
+
+
+Dieser baut eine Vagrant Box mit Windows Server 2016, die bereits für die Verwendung mit Ansible konfiguriert ist. Sobald sie lokal vorliegt, muss sie Vagrant bekannt gemacht werden:
+
+```
+vagrant box add windows_2016_ansible.box
 ```
 
 

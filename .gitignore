@@ -29,3 +29,8 @@ target
 
 # logback
 logback.out.xml
+
+# Vagrantboxes
+*.box
+step0-packer-windows-vagrantbox/Vagrantfile
+*.ISO
