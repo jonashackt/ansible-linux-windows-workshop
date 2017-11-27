@@ -9,29 +9,21 @@ Dieser Workshop soll viel Hands-On Erfahrung vermitteln. Wissen prägt sich am e
 
 Im ersten Teil werden wir die Basics zu Ansible kennenlernen und Ad-Hoc erste Tasks anwenden. Das Projekt verwendet [Vagrant](https://www.vagrantup.com/), um die verschiedenen Server bereitzustellen, die mit dem DevOps-Tools Ansible provisioniert werden sollen.
 
-## Vorraussetzungen:
+## Vorraussetzungen: Ein globales Rechenzentrum in der Hosentasche:
 
-#### a) Installationen von VirtualBox, Packer, Vagrant, Ansible, Git, Maven
-
-###### auf dem Mac via [brew](https://brew.sh/index_de.html)
-* `brew cask install virtualbox` 
-* `brew cask install vagrant`
-* `brew install maven`
-* `brew install git`
+#### a) Installationen von VirtualBox, Packer, Vagrant
 
 ###### auf Windows via [chocolatey](https://chocolatey.org/)
-
-// TODO: Windows 10 - Subsystem? oder Vagrant Box??
-
+* `choco install packer`
 * `choco install virtualbox`
 * `choco install vagrant`
-* `choco install maven`
-* `choco install git` 
+
+###### auf dem Mac via [brew](https://brew.sh/index_de.html)
+* `brew install packer`
+* `brew cask install virtualbox` 
+* `brew cask install vagrant`
 
 ###### unter Linux - einfach den jeweiligen Package Manager verwenden
-
-Bspw.
-* `apt-get install git`
 
 
 #### Windows Server 2016 Vagrant Box:
@@ -42,11 +34,11 @@ Für die Schulung sind nur die folgenden Schritte notwendig:
 
 ###### 1.) ISO herunterladen
 
-https://www.microsoft.com/de-de/evalcenter/evaluate-windows-server-2016 (registration needed)
+https://www.microsoft.com/de-de/evalcenter/evaluate-windows-server-2016 (oder direkt vom USB-Stick des Trainers)
 
 ###### 2.) Vagrant Box mit Packer bauen
 
-Das Schulungs-GitHub Repository clonen: [ansible-linux-windows-workshop](https://github.com/jonashackt/ansible-linux-windows-workshop) und im Ordner `/day01/00_Infrastructure-as-Code/AnsibleWsWindows` folgenden Befehl ausführen:
+Das Schulungs-GitHub Repository clonen: [ansible-linux-windows-workshop](https://github.com/jonashackt/ansible-linux-windows-workshop) und im Ordner `/day01/00_Infrastructure-as-Code/NewYork` folgenden Befehl ausführen:
 
 ```
 packer build -var iso_url=14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO -var iso_checksum=70721288bbcdfe3239d8f8c0fae55f1f windows_2016_ansible.json
@@ -56,13 +48,23 @@ packer build -var iso_url=14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-
 Dieser baut eine Vagrant Box mit Windows Server 2016, die bereits für die Verwendung mit Ansible konfiguriert ist. Sobald sie lokal vorliegt, muss sie Vagrant bekannt gemacht werden:
 
 ```
-vagrant box add windows_2016_ansible.box
+vagrant box add --name windows_2016_ansible_virtualbox  windows_2016_ansible_virtualbox.box
 ```
 
 
+#### Die Ansible Control Machine
+
+Mac-, Linux- & Windows 10-User könn(t)en ohne eine extra virtuelle Maschine loslegen - einfach Ansible installieren und fertig. ABER: Windows-User wären ausgesperrt!
+
+> Da die Schulung aber für alle Nutzer eine einheitliche Trainingsumgebung bereitstellen will, wird die Ansible Control Machine zusätzlich bereitgestellt
+
+`Microsoft Edge on Windows 10 Stable (15.xxx)` hier herunterladen https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/#downloads (oder direkt vom USB-Stick des Trainers)
 
 
-Sobald die Maschinen bereitstehen und von Ansible angesprochen werden können, soll ein durchgängiges Anwendungsbeispiel aufgebaut werden:
+
+
+
+Sobald die Maschinen bereitstehen und von Ansible angesprochen werden können, soll ein durchgängiges Anwendungsbeispiel aufgebaut werden.
 
 
 

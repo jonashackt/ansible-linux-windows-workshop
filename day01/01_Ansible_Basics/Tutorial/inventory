@@ -1,17 +1,17 @@
-[nyc]
-52.29.184.160 ansible_user=ansible ansible_ssh_private_key_file=Keys/id_rsa
+[ffm]
+172.16.2.20 ansible_user=vagrant ansible_password=vagrant
 
-[stuttgart]
-localhost ansible_user=vagrant ansible_password=vagrant ansible_port=2222
+[nyc]
+172.16.2.21 ansible_user=vagrant ansible_password=vagrant
 
 
 
 [ger:children]
-stuttgart
+ffm
 
 [usa:children]
 nyc
 
 [webserver:children]
-stuttgart
+ffm
 nyc

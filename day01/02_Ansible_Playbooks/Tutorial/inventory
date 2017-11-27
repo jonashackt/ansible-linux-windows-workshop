@@ -1,0 +1,17 @@
+[ffm]
+172.16.2.20 ansible_user=vagrant ansible_password=vagrant
+
+[nyc]
+172.16.2.21 ansible_user=vagrant ansible_password=vagrant
+
+
+
+[ger:children]
+ffm
+
+[usa:children]
+nyc
+
+[webserver:children]
+ffm
+nyc

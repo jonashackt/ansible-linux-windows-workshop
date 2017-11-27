@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Ping localhost
-ansible all -m ping -i "localhost,"
-
-
 # Disalbe HostKey checking at 1st execution
 export ANSIBLE_HOST_KEY_CHECKING=False
 
@@ -13,5 +9,9 @@ ansible all -m ping -i inventory
 # Enable HostKey checking again
 unset ANSIBLE_HOST_KEY_CHECKING
 
-#Pattern
-ansible all:!nyc -m ping -i inventory
+#Pattern (http://docs.ansible.com/ansible/latest/intro_patterns.html)
+ansible nyc -m ping -i inventory
+
+ansible usa:&ffm -m ping -i inventory
+
+ansible all:\!nyc -m ping -i inventory
