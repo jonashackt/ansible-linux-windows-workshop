@@ -100,6 +100,8 @@ Siehe http://docs.ansible.com/ansible/latest/intro_installation.html#latest-rele
 sudo apt-add-repository ppa:ansible/ansible
 sudo apt-get update
 sudo apt-get install ansible
+sudo apt-get install python-pip
+pip install pywinrm
 ```
 
 ![Installing_Ansible_on_Control_Machine.png](https://github.com/jonashackt/ansible-linux-windows-workshop/blob/master/Installing_Ansible_on_Control_Machine.png)
@@ -127,31 +129,45 @@ Das Ergebnis sollte zwei erfolgreiche `pongs` zurückgeben:
 
 ![Control_Machine_Successful_Ansible_Call_of_FFMandNYC.png](https://github.com/jonashackt/ansible-linux-windows-workshop/blob/master/Control_Machine_Successful_Ansible_Call_of_FFMandNYC.png)
 
+Außerdem einmal die Windows Connectivity testen:
+
+```
+ansible all -m win_ping -i inventoryStuttgart 
+```
 
 
 Sobald die Maschinen bereitstehen und von Ansible angesprochen werden können, soll ein durchgängiges Anwendungsbeispiel aufgebaut werden.
 
 
 
+#### Ein durchgängiges Beispiel
+
+Wir wollen eine moderne Webanwendung mit Hilfe von Ansible auf ein System provisionieren. Dafür nutzen wir das aktuell sehr beliebte [Spring Boot](https://projects.spring.io/spring-boot/) im Java Enterprise Umfeld. 
+
+* Spring Boot Anwendung auf Linux provisionieren
+
+Danach wollen wir das gleiche mit Ansible auf einem Windows System durchführen.
+
+* Spring Boot Anwendung auf Windows provisionieren
+
+
+Und dann kommen noch Container ins Spiel. Wir werden die Vorteile von Docker motivieren und das Zusammenspiel mit Ansible zeigen. Ziel ist es Docker zu nutzen, um erneut eine Spring Boot Anwendung zu provisionieren.
+
+* Spring Boot Anwendung - Dockerized - auf Linux provisionieren
+* Spring Boot Anwendund - Dockerized - auf Windows provisionieren
 
 
 
-
-- Bootstrapping neuer Instanzen
-- Apache2 Webserver installieren und konfigurieren
-
-In der heutigen Welt ist alles hochverfügbar. Wir werden das Anwendungsbeispiel dahingehend ausbauen:
-
-- Apache2 hinter Loadbalancer
-- Rolling updates
-
-Und dann kommen noch Container ins Spiel. Wir werden die Vorteile von Docker motivieren und das Zusammenspiel mit Ansible zeigen. Ziel ist es Docker zu nutzen, um erneut einen Apache2 aufzusetzen. Zudem wollen wir keycloak als Authentifizierungsdienst einbauen und das Apache modul mod_auth_openidc nutzen. Anhand dieses komplexen Beispiels werden wir docker compose vorstellen.
+Da heute Microservice-Architekturen das Mittel der Wahl darstellen, wollen wir ein komplexeres Beispiel mit Spring Cloud und Docker Compose aufbauen.
 
 Um zu zeigen, wie Ansible und Docker zusammenspielen werden wir:
 
 - den Docker Host mit Ansible installieren und konfigurieren
 - Container mit Ansible orchestrieren
-- Ansible-Container nutzen
+
+
+
+
 
 Abschließend werden wir besprechen, wie wir die erstellten Skripte in einer CI Umgebung nutzen können und gehen kurz auf Best-Practices im Bezug auf sensible Daten ein.
 
