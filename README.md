@@ -68,7 +68,7 @@ Nun folgt der `vagrant up`
 
 > Leider vergisst Microsoft bei der eigenen Vagrant Box ein paar grundlegende Dinge, damit diese auch ohne Probleme funktioniert. Denn wie man vielleicht schon bemerkt hat, führt ein unvoreingenommenes vagrant up zu einem „Timed out while waiting for the machine to boot […]“. Das liegt an der Konfiguration der Network List Management Policies, die einen Zugriff per Windows Remote Management (WinRM) verhindern. Doch dem kann man schnell Abhilfe verschaffen. Dazu einmalig nach dem ersten Start der Vagrant Box in die Local Security Policys gehen und darin in die Network List Management Policies wechseln. Dort auf Network klicken und im Tab Network Location den Location type auf private und die User permissions auf User can change location setzen.  Nun sollte das vagrant up so funktionieren wie gedacht. Es wäre natürlich schön, wenn uns diese Arbeit schon Microsoft abnehmen würde.
 
-Wen das Englische Tastaturlayout stört: `language` tippen, runter scrollen und unter __Related settings__ `Additional date, time, & regional settings`. Dann auf `Change input methods`unter __Language__ usw. sudo ...
+Wen das Englische Tastaturlayout stört: `language` tippen, runter scrollen und unter __Related settings__ `Additional date, time, & regional settings`. Dann auf `Change input methods`unter __Language__ usw. sudo ... (zuletzt einmal neustarten)
 
 ##### Control Machine vorbereiten
 
@@ -104,11 +104,29 @@ sudo apt-get install ansible
 
 ![Installing_Ansible_on_Control_Machine.png](https://github.com/jonashackt/ansible-linux-windows-workshop/blob/master/Installing_Ansible_on_Control_Machine.png)
 
-Danach noch schnell Git auf der Control Machine installieren - dafür am besten Chocolatey vorher installieren (siehe https://chocolatey.org/install). Dazu in der Control Machine auf dieses Repo hier gehen: https://github.com/jonashackt/ansible-linux-windows-workshop und den Powershell-Befehl ausführen:
+
+##### Testaufruf des globales Hosentaschen-Rechenzentrums
+
+Auf dem Host jeweils unter `day01/00_Infrastructure-as-Code/Frankfurt` & `day01/00_Infrastructure-as-Code/NewYork` ein `vagrant up` ausführen.
+
+Dann wieder in die Control Machine wechseln: Nun kann das https://github.com/jonashackt/ansible-linux-windows-workshop lokal in die Control Machine gecloned werden (git ist bereits im Windows 10 Subsystem installiert):
 
 ```
-Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+git clone https://github.com/jonashackt/ansible-linux-windows-workshop.git
 ```
+
+Im Ordner `ansible-linux-windows-workshop/day01/01_Ansible_Basics/Tutorial` einmal die folgenden Befehle ausführen:
+
+```
+export ANSIBLE_HOST_KEY_CHECKING=False
+ansible all -m ping -i inventory
+unset ANSIBLE_HOST_KEY_CHECKING
+```
+
+Das Ergebnis sollte zwei erfolgreiche `pongs` zurückgeben:
+
+![Control_Machine_Successful_Ansible_Call_of_FFMandNYC.png](https://github.com/jonashackt/ansible-linux-windows-workshop/blob/master/Control_Machine_Successful_Ansible_Call_of_FFMandNYC.png)
+
 
 
 Sobald die Maschinen bereitstehen und von Ansible angesprochen werden können, soll ein durchgängiges Anwendungsbeispiel aufgebaut werden.
