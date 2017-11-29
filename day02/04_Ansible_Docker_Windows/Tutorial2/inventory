@@ -1,0 +1,9 @@
+[stuttgart]
+172.16.2.30
+
+
+[ger:children]
+stuttgart
+
+[springboot-windows-dev:children]
+stuttgart
