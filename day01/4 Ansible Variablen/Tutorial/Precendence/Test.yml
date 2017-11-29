@@ -1,9 +1,0 @@
----
-- name: Test
-  hosts: all
-  remote_user: ansible
-  vars:
-    var_loc: "playbook"
-  tasks:
-  - name: Debian?
-    debug: msg="Variable Location:{{ var_loc }}"

@@ -1,7 +1,0 @@
-countries:
-  de:
-    item: "germany"
-    url: ".de"
-  nl:
-    item: "netherlands"
-    url: ".nl"

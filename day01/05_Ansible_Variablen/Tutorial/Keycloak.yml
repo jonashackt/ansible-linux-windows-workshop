@@ -1,0 +1,4 @@
+- hosts: ffm
+  become: true
+  roles:
+    - { role: keycloak, jdk_src_path: /Users/jannikhuels/Downloads/, keycloak_source_url: "https://downloads.jboss.org/keycloak/3.1.0.Final/" }

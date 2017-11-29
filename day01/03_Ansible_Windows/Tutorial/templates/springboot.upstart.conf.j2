@@ -1,0 +1,13 @@
+# Place in /etc/init
+
+description "Spring Boot app"
+author "your@mail.com"
+
+start on net-device-up
+
+#respawn
+
+setuid spring
+env LANG="de_DE.UTF-8"
+env COOL_ENV_VAR=""
+exec java -Xmx512m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/var/log/bipro/heapOnOutOfMemory.dump -jar {{spring_boot_app_path}}/{{spring_boot_app_name}}.jar

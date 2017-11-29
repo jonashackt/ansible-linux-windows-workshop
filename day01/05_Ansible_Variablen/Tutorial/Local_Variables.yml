@@ -1,0 +1,16 @@
+---
+- name: Lokale Variablen
+  hosts: all
+  remote_user: ansible
+  tasks:
+  - file:
+      path: /etc/ansible/facts.d
+      state: directory
+      mode: 0755
+      owner: ansible
+      group: ansible
+    become: true
+  - name: Lokale Varibalen hinzufügen
+    copy:
+      src: preferences.fact
+      dest: /etc/ansible/facts.d

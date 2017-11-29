@@ -1,7 +1,0 @@
-- name: Restart keycloak
-  service: name=keycloak state=restarted
-
-- name: create admin account
-  command: /opt/keycloak/bin/add-user-keycloak.sh -u admin -p admin
-  environment:
-    JAVA_HOME: "{{jdk_dest_path}}jdk1.8"

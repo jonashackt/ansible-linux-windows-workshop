@@ -1,2 +1,0 @@
-- name: Installiere app
-  debug: msg="Installiere {{item}}"

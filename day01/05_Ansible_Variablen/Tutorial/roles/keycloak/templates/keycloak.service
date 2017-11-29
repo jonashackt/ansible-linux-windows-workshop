@@ -1,0 +1,19 @@
+[Unit]
+Description=Keycloak Application Server
+After=network.target
+
+[Service]
+Type=idle
+LimitNOFILE=65000
+Environment=JBOSS_HOME=/opt/keycloak
+Environment=JBOSS_LOG_DIR=/opt/keycloak
+Environment=JAVA_HOME=/opt/jdk1.8
+User=keycloak
+Group=keycloak
+StandardOutput=null
+ExecStart=/opt/keycloak/bin/standalone.sh -b {{ hostvars[inventory_hostname]['ansible_eth0']['ipv4']['address'] }} --server-config=standalone.xml -Djboss.bind.address.private={{ hostvars[inventory_hostname]['ansible_eth0']['ipv4']['address'] }}
+TimeoutStartSec=600
+TimeoutStopSec=600
+
+[Install]
+WantedBy=multi-user.target

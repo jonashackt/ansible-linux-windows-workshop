@@ -1,2 +1,0 @@
-- name: apache2 Neustart
-  service: name=apache2 state=restarted

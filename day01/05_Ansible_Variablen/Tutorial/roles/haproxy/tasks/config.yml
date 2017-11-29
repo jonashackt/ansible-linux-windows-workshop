@@ -1,0 +1,4 @@
+- haproxy:
+    state: enabled
+    host: '{{ item }}'
+    backend: www

@@ -1,0 +1,6 @@
+---
+- name: Bootstrap
+  hosts: all
+  tasks:
+  - name: Ping
+    ping:

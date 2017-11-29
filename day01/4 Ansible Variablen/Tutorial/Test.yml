@@ -1,5 +1,0 @@
-- hosts: "{{ env }}"
-  vars:
-    - text: dumm
-  tasks:
-    - debug: msg={{ text }}
