@@ -1,2 +1,5 @@
-# Bootstrap neuer Instanz
-ansible-playbook Bootstrap.yml -i "52.29.184.160," -u ansible --private-key Keys/id_rsa
+# Clone example application https://github.com/jonashackt/restexamples into Tutorial directory
+#
+# Build example application with Maven: mvn clean install
+#
+ansible-playbook SpringBootLinux.yml -i inventory --extra-vars "spring_boot_app_jar=restexamples/target/restexamples-0.0.1-SNAPSHOT.jar"

@@ -1,0 +1,102 @@
+---
+- hosts: all
+  vars:
+    spring_boot_app_name: restexample-springboot
+    spring_boot_app_path: "/tmp/spring-boot/{{spring_boot_app_name}}"
+    oracle_java_version: 8
+    oracle_java_cache_valid_time: 3600
+
+  tasks:
+  ###### Preparation steps
+  - name: Create directory /tmp/spring-boot/spring_boot_app_name, if not there
+    file:
+      path: "{{spring_boot_app_path}}"
+      state: directory
+
+  ###### Extraction and copying of all necessary files (unzip or install JRE, deploy Spring Boot jar)
+  - name: add java ppa repo
+    apt_repository:
+      repo: 'ppa:webupd8team/java'
+      state: present
+    become: true
+
+  - name: ensure the webupd8 launchpad apt repository key is present
+    apt_key:
+      id: 7B2C3B0889BF5709A105D03AC2518248EEA14886
+     # id: 0xC2518248EEA14886
+      keyserver: keyserver.ubuntu.com
+      state: present
+    become: true
+
+  - name: ensure the webupd8 launchpad apt repository is present
+    apt_repository:
+      repo: "{{ item }} http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main"
+      update_cache: yes
+      state: present
+    with_items:
+      - deb
+      - deb-src
+    become: true
+
+  - name: set license as accepted
+    debconf:
+      name: 'oracle-java{{ oracle_java_version }}-installer'
+      question: 'shared/accepted-oracle-license-v1-1'
+      value: 'true'
+      vtype: 'select'
+    become: true
+
+  - name: Install Oracle JDK 8
+    apt:
+      name: "oracle-java{{ oracle_java_version }}-installer"
+      state: latest
+      cache_valid_time: 3600
+      update_cache: yes
+    become: true
+
+  - name: set Java version as default
+    apt:
+      name: "oracle-java{{ oracle_java_version }}-set-default"
+      state: latest
+    become: yes
+
+  - name: Copy Spring Boot app´s jar-File to directory /tmp/spring-boot/spring_boot_app_name
+    copy:
+      src: "{{spring_boot_app_jar}}"
+      dest: "{{spring_boot_app_path}}/{{spring_boot_app_name}}.jar"
+
+  - name: Copy upstart file for Spring Boot Linux service onto Server
+    template:
+      src: templates/springboot.upstart.conf.j2
+      dest: /etc/init/springbootapp.conf
+      owner: root
+    become: true
+
+#  - name: Fire up Spring Boot app Linux service
+#    shell: "service springbootapp restart"
+#    ignore_errors: true
+#    become: true
+
+  - name: Fire up Spring Boot app Linux service
+    service:
+      name: springbootapp
+      state: restarted
+    become: true
+
+  - name: Wait for Port is available
+    wait_for:
+      host: localhost
+      port: 8080
+      connect_timeout: 30
+      timeout: 60
+
+  ###### Smoke test, if Spring Boot app has booted up correctly
+  - name: Wait until our Spring Boot app is up & running
+    uri:
+      url: "http://localhost:8080/swagger-ui.html"
+      method: GET
+    register: result
+    until: result.status == 200
+    retries: 5
+    delay: 5
+
