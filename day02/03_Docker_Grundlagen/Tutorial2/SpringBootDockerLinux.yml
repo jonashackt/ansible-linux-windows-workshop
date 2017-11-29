@@ -1,0 +1,62 @@
+---
+- hosts: all
+  vars:
+    spring_boot_app_name: restexample-springboot
+    spring_boot_app_path: "/tmp/spring-boot/{{spring_boot_app_name}}"
+    app_port: 8080
+
+  tasks:
+  ###### Preparation steps
+  - name: Create directory /tmp/spring-boot/spring_boot_app_name, if not there
+    # TODO
+
+  - name: Copy Spring Boot app´s jar-File to directory /tmp/spring-boot/spring_boot_app_name
+    copy:
+      src: "{{spring_boot_app_jar}}"
+      dest: "{{spring_boot_app_path}}/{{spring_boot_app_name}}.jar"
+
+  - name: Template and copy Spring Boot app´s Dockerfile to directory /tmp/springboot/spring_boot_app.name
+    template:
+      src: "templates/Dockerfile-SpringBoot-Linux.j2"
+      # TODO: Where should the Dockerfile go?
+
+  # Cleanup old Docker containers & images
+  - name: Stop the Service´ Docker container
+    shell: "docker stop {{spring_boot_app_name}}"
+    ignore_errors: yes
+
+  - name: Remove the Service´ Docker container
+    shell: "docker rm {{spring_boot_app_name}} --force"
+    ignore_errors: yes
+
+  - name: Remove existing App´s Docker Container image
+    shell: # TODO: Remove the old Docker Container´s Image
+    ignore_errors: yes
+
+  - name: Build the Service´ Docker image
+    shell: "docker build . --tag {{spring_boot_app_name}}:latest"
+    args:
+      chdir: "{{spring_boot_app_path}}"
+
+  - name: Build the Service´ Docker image
+    shell: # TODO: Run the build Docker Container with correct port mapping
+    args:
+      chdir: "{{spring_boot_app_path}}"
+
+  - name: Wait for Port is available
+    wait_for:
+      host: localhost
+      port: 8080
+      connect_timeout: 30
+      timeout: 60
+
+  ###### Smoke test, if Spring Boot app has booted up correctly
+  - name: Wait until our Spring Boot app is up & running
+    uri:
+      url: "http://localhost:8080/swagger-ui.html"
+      method: GET
+    register: result
+    until: result.status == 200
+    retries: 5
+    delay: 5
+

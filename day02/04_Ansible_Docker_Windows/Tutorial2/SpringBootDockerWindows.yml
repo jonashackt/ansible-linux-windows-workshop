@@ -1,0 +1,68 @@
+---
+- hosts: all
+  vars:
+    app_name: restexample-springboot
+    base_path: "C:\\springboot\\simpleapp"
+    app_port: 8088
+    target_path: "{{base_path}}\\{{app_name}}"
+
+  tasks:
+  # Prepare for the Docker build...
+  - name: Create directory C:\springboot\simpleapp\app_name, if not there
+    win_file: path={{target_path}} state=directory
+
+  - name: Template and copy Spring Boot app´s Dockerfile to directory C:\springboot\simpleapp\app_name
+    win_template:
+      # TODO: insert correct src
+      dest: "{{target_path}}\\Dockerfile"
+
+  - name: Copy Spring Boot app´s jar-File to directory C:\springboot\simpleapp\app_name
+    win_copy:
+      src: "{{jar_input_path}}"
+      dest: "{{target_path}}\\{{app_name}}.jar"
+
+  # Cleanup old Docker containers & images
+  - name: Stop the Service´ Docker container
+    win_shell: # TODO: stop old Container
+    ignore_errors: yes
+
+  - name: Remove the Service´ Docker container
+    win_shell: # TODO: remove old Docker container
+    ignore_errors: yes
+
+  - name: Remove the Service´ Docker image
+    win_shell: docker rmi simpleapp_{{app_name}}:latest --force
+    ignore_errors: yes
+
+  # Build & run our Spring Boot App
+  - name: Build the Service´ Docker image
+    win_shell: # TODO: build the Docker image
+    args:
+      chdir: "{{target_path}}"
+
+  - name: Run the Service´ Docker container
+    win_shell: "docker run -d --publish {{app_port}}:{{app_port}} --name=simpleapp_{{app_name}} --restart=unless-stopped simpleapp_{{app_name}}:latest"
+
+  # Healthcheck our Spring Boot App
+  - name: Obtain the Docker Container´s internal IP address (because localhost doesn´t work for now https://github.com/docker/for-win/issues/458)
+    win_shell: "docker inspect -f {% raw %}'{{ .NetworkSettings.Networks.nat.IPAddress }}' {% endraw %} simpleapp_{{app_name}} {{ '>' }} container_ip.txt"
+
+  - name: Get the Docker Container´s internal IP address from the temporary txt-file (we have to do this because of templating problems, see http://stackoverflow.com/a/32279729/4964553)
+    win_shell: cat container_ip.txt
+    register: win_shell_txt_return
+
+  - name: Define the IP as variable
+    set_fact:
+      docker_container_ip: "{{ win_shell_txt_return.stdout.splitlines()[0] }}"
+
+  - debug:
+      msg: "Your Docker Container has the internal IP {{ docker_container_ip }} --> Let´s do a health-check against this URI: 'http://{{ docker_container_ip }}:{{app_port}}/health'"
+
+  - name: Sadly the first win_uri call responds with non-correctly filled fields - so we do a second one & ignore this error
+    win_uri:
+      url: # TODO: Choose the correct URL for the health check
+      method: GET
+      headers:
+        Accept: application/json
+    until: health_result_bad.status_code == 200
+    ignore_errors: yes
