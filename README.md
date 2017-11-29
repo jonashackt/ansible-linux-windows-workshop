@@ -3,13 +3,42 @@ Ansible Workshop (Linux & Windows)
 
 Dieses Repopository basiert auf der super Vorarbeit meines Kollegen: https://github.com/jannikhuels/workshop-handson-ansible
 
-Der Fokus dieses Repositories liegt auf der Integration in die Zielbetriebssysteme Linux & Windows. Außerdem kommen als Beispielapplikationen [Spring Boot](https://projects.spring.io/spring-boot/) Anwendungen zum Einsatz. 
+Der Fokus dieses Repositories liegt allerdings auf der Interaktion von Ansible mit den beiden Zielbetriebssystemen Linux __UND__ Windows. Außerdem kommen als Beispielapplikationen [Spring Boot](https://projects.spring.io/spring-boot/) Anwendungen zum Einsatz. 
 
-Dieser Workshop soll viel Hands-On Erfahrung vermitteln. Wissen prägt sich am effektivsten ein, wenn es angewendet wird. Daher beschränken sich die Folien auf ein absolutes Minimum und werden durch Live-Nutzung der Tools mit Leben gefüllt. Am Ende jedes Abschnitts sollen die Teilnehmer dann das vorgestellte direkt praktisch anwenden.
+Dieser Workshop soll viel Hands-On Erfahrung vermitteln. Wissen prägt sich am effektivsten ein, wenn es angewendet wird. Daher beschränken sich die Folien auf ein absolutes Minimum und werden durch Live-Nutzung der Tools mit Leben gefüllt. Am Ende (fast) jeden Abschnitts sollen die Teilnehmer dann das vorgestellte direkt praktisch anwenden:
+
+## Tag 1
+* **[G]** Vorstellung [Persönliche Vorstellung, Kenntnisse, Erwartungen]
+* **[V]** Roadmap
+* **[V]** Infrastructure as Code
+* **[P]** Globales Rechenzentrum in der Hosentasche
+* **[V]** Ansible Grundlagen
+* **[P]** PONG?
+* **[V]** Ansible Playbooks
+* **[P]** Spring Boot Anwendung auf Linux provisionieren
+* **[V]** Ansible Windows
+* **[P]** Spring Boot Anwendung auf Windows provisionieren
+* **[V]** Ansible Wiederverwendung
+* **[V]** Ansible Variablen
+* **[G]** Retro
+
+## Tag 2
+* **[V]** Ansible Orchestrierung
+* **[V]** Ansible Zusammenfassung
+* **[V]** Docker Grundlagen
+* **[P]** Docker Installation auf Linux mit Ansible
+* **[P]** Docker Installation auf Windows mit Ansible
+* **[V]** Docker Compose
+* **[V]** Ansible Docker
+* **[V]** Automatisierung
+* **[V]** Sicherheit
+* **[G]** Retro
+
+
+# Vorraussetzungen: Ein globales Rechenzentrum in der Hosentasche:
 
 Im ersten Teil werden wir die Basics zu Ansible kennenlernen und Ad-Hoc erste Tasks anwenden. Das Projekt verwendet [Vagrant](https://www.vagrantup.com/), um die verschiedenen Server bereitzustellen, die mit dem DevOps-Tools Ansible provisioniert werden sollen.
 
-## Vorraussetzungen: Ein globales Rechenzentrum in der Hosentasche:
 
 #### a) Installationen von VirtualBox, Packer, Vagrant
 
@@ -177,50 +206,12 @@ Dafür müssen wir zeigen,
 Da heute Microservice-Architekturen das Mittel der Wahl darstellen, wollen wir ein komplexeres Beispiel mit Spring Cloud und Docker Compose aufbauen.
 
 
-- Container mit Ansible orchestrieren
-
-
-
-
 
 Abschließend werden wir besprechen, wie wir die erstellten Skripte in einer CI Umgebung nutzen können.
 
-## Tag 1
-* **[G]** Vorstellung [Persönliche Vorstellung, Kenntnisse, Erwartungen]
-* **[V]** Roadmap
-* **[V]** Ansible Grundlagen
-* **[P]** PONG?
-* **[V]** Ansible Playbooks
-* **[P]** Bootstrap
-* **[V]** Ansible Rollenkonzept
-* **[P]** Apache2
-* **[V]** Ansible Variablen
-* **[P]** Apache2 && Keycloak
-* **[G]** Retro
 
-## Tag 2
-* **[V]** Ansible Orchestrierung
-* **[P]** HAProxy && Updates
-* **[V]** Ansible Zusammenfassung
-* **[V]** Docker Grundlagen
-* **[P]** Ansible Docker Host
-* **[P]** Erster Container
-* **[V]** Docker Compose
-* **[P]** Einmal alles, bitte
-* **[G]** Retro
 
-## Tag 3
-* **[V]** Ansible Docker
-* **[P]** Container Orchestrierung
-* **[V]** Ansible Container
-* **[P]** Container && VMs 
-* **[V]** Automatisierung
-* **[P]** Jenkins
-* **[V]** Sicherheit
-* **[P]** Ansible Vault
-* **[G]** Retro
-
-ToDo:
+# ToDo:
 * Jump-Host / Proxy?
 * https://github.com/ansible/ansible-container
 * https://linuxacademy.com/howtoguides/posts/show/topic/13750-managing-docker-containers-with-ansible
