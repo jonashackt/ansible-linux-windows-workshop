@@ -1,16 +1,9 @@
-[ffm]
-172.16.2.20 ansible_user=vagrant ansible_password=vagrant
-
-[nyc]
-172.16.2.21 ansible_user=vagrant ansible_password=vagrant
+[stuttgart]
+172.16.2.30
 
 
 [ger:children]
-ffm
+stuttgart
 
-[usa:children]
-nyc
-
-[webserver:children]
-ffm
-nyc
+[springboot-windows-dev:children]
+stuttgart

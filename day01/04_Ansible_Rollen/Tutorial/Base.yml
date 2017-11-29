@@ -1,6 +1,0 @@
-- hosts: all
-  tasks:
-  - name: Installiere Base
-    debug: msg="Installiere Base"
-    
-  - include: Task.yml

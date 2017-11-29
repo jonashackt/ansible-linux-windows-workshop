@@ -1,0 +1,34 @@
+---
+- name: Basis Setup
+  hosts: all
+  remote_user: ansible
+  become: true
+  tasks:
+  - name: Installiere ntp
+    apt: name=ntp state=present
+
+  - name: Starte und Enable ntpd
+    service: name=ntp state=started enabled=true
+
+- name: Installiere apache2
+  hosts: webservers
+  remote_user: ansible
+  become: true
+  tasks:
+  - name: Update apt cache.
+    apt: update_cache=yes cache_valid_time=3600
+
+  - name: Installiere apache2 in aktueller Version
+    apt: name=apache2 state=latest
+
+  - name: Setze neue index.html
+    copy: src=index.html dest=/var/www/html/index.html
+    notify:
+    - apache2 Neustart
+
+  - name: Starte apache2
+    service: name=apache2 state=started enabled=yes
+
+  handlers:
+  - name: apache2 Neustart
+    service: name=apache2 state=restarted

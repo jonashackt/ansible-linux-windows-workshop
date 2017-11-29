@@ -1,0 +1,6 @@
+- hosts: all
+  tasks:
+  - include: Install.yml
+    with_items:
+      - "httpd"
+      - "haproxy"

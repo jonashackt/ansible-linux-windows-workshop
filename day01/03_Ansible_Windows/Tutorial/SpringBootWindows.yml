@@ -1,0 +1,49 @@
+---
+- hosts: all
+  vars:
+    spring_boot_app_name: restexample-springboot
+    # TODO: define a correct variable for the path
+    path_to_java_exe: "C:\\ProgramData\\Oracle\\Java\\javapath\\java.exe"
+
+  tasks:
+  ###### Preparation steps
+  - name: Create directory C:\spring-boot\spring_boot_app_name, if not there
+    # TODO
+
+  - name: Install nssm (non-sucking service manager) via chocolatey
+    # TODO
+
+  ###### Stop services, if they´re already in place
+  - name: Stop Spring Boot service, if there - so we can extract JRE & other necessary files without Windows file handle problems
+    # TODO
+    ignore_errors: yes # TODO Warum steht hier ein 'ignore_errors?'
+
+
+  ###### Extraction and copying of all necessary files (unzip or install JRE, deploy Spring Boot jar)
+  - name: Install Java Runtime Environment (JRE) 8 via chocolatey
+    # TODO
+
+  - name: Copy Spring Boot app´s jar-File to directory C:\spring-boot\spring_boot_app_name
+    win_copy:
+      src: "{{spring_boot_app_jar}}"
+      # TODO add correct destination
+
+  ####### Service installation
+  # (stopping and configuration of Application directory is only done for demontration purposes - for apps that need certain .dlls on the path for example)
+  - name: Install Spring Boot app as Windows service (via nssm), if not already there - but remain stopped to configure Application directory
+    win_nssm:
+      name: "{{spring_boot_app_name}}"
+      # TODO start a Java application as a Windows service
+
+  - name: Fire up Spring Boot app Windows service
+    # TODO add win_service Module
+
+  ###### Smoke test, if app has booted up correctly
+  - name: Wait until our Spring Boot app is up & running
+    win_uri:
+      url: "http://localhost:8080/swagger-ui.html"
+      method: GET
+    register: result
+    until: # TODO: try to get HTTPStatus OK (200) from the result
+    retries: 5
+    delay: 5

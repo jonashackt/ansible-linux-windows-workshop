@@ -144,6 +144,17 @@ Sobald die Maschinen bereitstehen und von Ansible angesprochen werden können, s
 
 Wir wollen eine moderne Webanwendung mit Hilfe von Ansible auf ein System provisionieren. Dafür nutzen wir das aktuell sehr beliebte [Spring Boot](https://projects.spring.io/spring-boot/) im Java Enterprise Umfeld. 
 
+Dafür brauchen wir eine Spring Boot Anwendung: Entweder schnell selbst eine zusammenbauen (z.B. per https://start.spring.io/) oder die folgende Beispielapp clonen: https://github.com/jonashackt/restexamples
+
+```
+cd /home/vagrant
+git clone https://github.com/jonashackt/restexamples.git
+# Maven installieren
+sudo apt-get install maven
+```
+
+Dann werden wir eine:
+
 * Spring Boot Anwendung auf Linux provisionieren
 
 Danach wollen wir das gleiche mit Ansible auf einem Windows System durchführen.
@@ -151,25 +162,28 @@ Danach wollen wir das gleiche mit Ansible auf einem Windows System durchführen.
 * Spring Boot Anwendung auf Windows provisionieren
 
 
+
 Und dann kommen noch Container ins Spiel. Wir werden die Vorteile von Docker motivieren und das Zusammenspiel mit Ansible zeigen. Ziel ist es Docker zu nutzen, um erneut eine Spring Boot Anwendung zu provisionieren.
 
 * Spring Boot Anwendung - Dockerized - auf Linux provisionieren
 * Spring Boot Anwendund - Dockerized - auf Windows provisionieren
 
+Dafür müssen wir zeigen, 
+
+* wie Ansible und Docker zusammenspielen
+* wie man den Docker Host mit Ansible installiert und konfiguriert
 
 
 Da heute Microservice-Architekturen das Mittel der Wahl darstellen, wollen wir ein komplexeres Beispiel mit Spring Cloud und Docker Compose aufbauen.
 
-Um zu zeigen, wie Ansible und Docker zusammenspielen werden wir:
 
-- den Docker Host mit Ansible installieren und konfigurieren
 - Container mit Ansible orchestrieren
 
 
 
 
 
-Abschließend werden wir besprechen, wie wir die erstellten Skripte in einer CI Umgebung nutzen können und gehen kurz auf Best-Practices im Bezug auf sensible Daten ein.
+Abschließend werden wir besprechen, wie wir die erstellten Skripte in einer CI Umgebung nutzen können.
 
 ## Tag 1
 * **[G]** Vorstellung [Persönliche Vorstellung, Kenntnisse, Erwartungen]

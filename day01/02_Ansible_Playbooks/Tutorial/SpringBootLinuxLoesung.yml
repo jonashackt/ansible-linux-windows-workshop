@@ -64,7 +64,7 @@
       src: "{{spring_boot_app_jar}}"
       dest: "{{spring_boot_app_path}}/{{spring_boot_app_name}}.jar"
 
-  - name: Copy upstart file for Spring Boot Linux service onto Server
+  - name: Template upstart file for Spring Boot Linux service onto Server
     template:
       src: templates/springboot.upstart.conf.j2
       dest: /etc/init/springbootapp.conf

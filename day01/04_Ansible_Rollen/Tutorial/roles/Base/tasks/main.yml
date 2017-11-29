@@ -1,2 +1,0 @@
-- name: Installiere Base
-  debug: msg="Installiere Base"

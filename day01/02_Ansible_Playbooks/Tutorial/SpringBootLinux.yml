@@ -9,7 +9,7 @@
   tasks:
   ###### Preparation steps
   - name: Create directory /tmp/spring-boot/spring_boot_app_name, if not there
-    # Add appropriate module
+    # TODO
 
   ###### Extraction and copying of all necessary files (unzip or install JRE, deploy Spring Boot jar)
   - name: add java ppa repo
@@ -58,18 +58,18 @@
     become: yes
 
   - name: Copy Spring Boot app´s jar-File to directory /tmp/spring-boot/spring_boot_app_name
-    # Add appropriate module
+    # TODO
 
-  - name: Copy upstart file for Spring Boot Linux service onto Server
-    # Add appropriate module
+  - name: Template upstart file for Spring Boot Linux service onto Server
+    # TODO
 
   - name: Fire up Spring Boot app Linux service
-    # Add appropriate module
+    # TODO
 
   - name: Wait for Port is available
-    # Add appropriate module
+    # TODO
 
   ###### Smoke test, if Spring Boot app has booted up correctly
   - name: Wait until our Spring Boot app is up & running
-    # Add appropriate module
+    # TODO
 
