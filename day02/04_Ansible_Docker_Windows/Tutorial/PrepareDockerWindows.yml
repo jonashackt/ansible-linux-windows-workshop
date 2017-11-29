@@ -1,0 +1,30 @@
+---
+- hosts: all
+
+  tasks:
+  - name: Check the minimum Windows build number
+    include_tasks: check-build-number.yml
+
+  - name: Install Windows Containers and Hyper-V Windows Features (if not already present)
+    # TODO: include correct playbook
+
+  - name: Install Docker on Windows (always the newest version) and pull needed base images
+    include_tasks: install-docker.yml
+
+  - name: Install Docker Compose (also always the newest version)
+    include_tasks: install-docker-compose.yml
+
+  - name: Run a Microsoft Docker Windows Testcontainer
+    include_tasks: run-test-container.yml
+
+  - name: Build the springboot-oraclejre-nanoserver Docker image
+    include_tasks: build-springboot-oraclejre-nanoserver-image.yml
+    vars:
+      # TODO which variable is missing?
+      java8_update_version: 152
+      java_build_version: b16
+      server_jre_name: server-jre-8u{{java8_update_version}}-windows-x64.tar.gz
+
+  - name: Your Windows Box is now fully ready to run Spring Boot Apps inside Windows Docker Containers
+    debug:
+      msg: "springboot-oraclejre8-nanoserver Docker image is ready for you Spring Boot Apps!"
