@@ -67,7 +67,7 @@ https://www.microsoft.com/de-de/evalcenter/evaluate-windows-server-2016 (oder di
 
 ###### 2.) Vagrant Box mit Packer bauen
 
-Das Schulungs-GitHub Repository clonen: [ansible-linux-windows-workshop](https://github.com/jonashackt/ansible-linux-windows-workshop) und im Ordner `/day01/00_Infrastructure-as-Code/NewYork` folgenden Befehl ausführen:
+Das Schulungs-GitHub Repository clonen: [ansible-linux-windows-workshop](https://github.com/jonashackt/ansible-linux-windows-workshop) und im Ordner `/day01/00_Infrastructure-as-Code/Stuttgart` folgenden Befehl ausführen:
 
 ```
 packer build -var iso_url=14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO -var iso_checksum=70721288bbcdfe3239d8f8c0fae55f1f windows_2016_ansible.json
