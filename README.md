@@ -51,6 +51,7 @@ Im ersten Teil werden wir die Basics zu Ansible kennenlernen und Ad-Hoc erste Ta
 * `brew install packer`
 * `brew cask install virtualbox` 
 * `brew cask install vagrant`
+* `brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Library/Formula/sshpass.rb`
 
 ###### unter Linux - einfach den jeweiligen Package Manager verwenden
 
