@@ -43,6 +43,7 @@ Im ersten Teil werden wir die Basics zu Ansible kennenlernen und Ad-Hoc erste Ta
 #### a) Installationen von VirtualBox, Packer, Vagrant
 
 ###### auf Windows via [chocolatey](https://chocolatey.org/)
+* Chocolatey installieren, dazu Powershell öffnen und folgenden Befehl ausführen: `Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))`
 * `choco install git`
 * `choco install packer`
 * `choco install virtualbox`
