@@ -43,11 +43,13 @@ Im ersten Teil werden wir die Basics zu Ansible kennenlernen und Ad-Hoc erste Ta
 #### a) Installationen von VirtualBox, Packer, Vagrant
 
 ###### auf Windows via [chocolatey](https://chocolatey.org/)
+* `choco install git`
 * `choco install packer`
 * `choco install virtualbox`
 * `choco install vagrant`
 
 ###### auf dem Mac via [brew](https://brew.sh/index_de.html)
+* `brew install git`
 * `brew install packer`
 * `brew cask install virtualbox` 
 * `brew cask install vagrant`
@@ -181,6 +183,7 @@ cd /home/vagrant
 git clone https://github.com/jonashackt/restexamples.git
 # Maven installieren
 sudo apt-get install maven
+sudo apt-get install default-jdk
 ```
 
 Dann werden wir eine:
