@@ -160,7 +160,7 @@ Acquire::ftp::proxy "ftp://user:password@proxy.example.de:8080";
 Siehe http://docs.ansible.com/ansible/latest/intro_installation.html#latest-releases-via-apt-ubuntu
 
 ```
-sudo apt-get install python-pip
+sudo apt-get install python3 python3-pip ipython3
 pip install ansible pywinrm
 ```
 
