@@ -126,12 +126,33 @@ Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu-1804 -OutFile Ubuntu1804.appx -
 Add-AppxPackage .\Ubuntu1804.appx
 ```
 
+Nun sollte Ubuntu installiert worden sein.
+
 Nun einen Nutzernamen und Passwort vergeben.
 
 Danach einmal das Package Management updaten:
 
 ```
-sudo apt-get update
+sudo apt-get update && sudo apt-get upgrade
+```
+
+Falls das in Timeout-Probleme läuft, kann es sein, dass man hinter einem (Firmen-)Proxy sitzt. Dazu einmal `/etc/apt/apt.conf.d/proxy.conf` anlegen:
+
+```
+sudo nano /etc/apt/apt.conf.d/proxy.conf
+```
+
+und den entsprechenden Proxy für den Zugriff von apt-get aufs Internet konfigurieren:
+
+```
+Acquire::http::proxy "http://proxy.example.de:8080";
+Acquire::https::proxy "https://proxy.example.de:8080";
+Acquire::ftp::proxy "ftp://proxy.example.de:8080";
+
+# oder bei notwendiger Authentifizierung:
+Acquire::http::proxy "http://user:password@proxy.example.de:8080";
+Acquire::https::proxy "https://user:password@proxy.example.de:8080";
+Acquire::ftp::proxy "ftp://user:password@proxy.example.de:8080";
 ```
 
 ##### Ansible auf der Control Machine installieren
