@@ -160,11 +160,8 @@ Acquire::ftp::proxy "ftp://user:password@proxy.example.de:8080";
 Siehe http://docs.ansible.com/ansible/latest/intro_installation.html#latest-releases-via-apt-ubuntu
 
 ```
-sudo apt-add-repository ppa:ansible/ansible
-sudo apt-get update
-sudo apt-get install ansible
 sudo apt-get install python-pip
-pip install pywinrm
+pip install ansible pywinrm
 ```
 
 ![Installing_Ansible_on_Control_Machine.png](https://github.com/jonashackt/ansible-linux-windows-workshop/blob/master/Installing_Ansible_on_Control_Machine.png)
