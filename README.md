@@ -117,6 +117,15 @@ Danach in den Windows Store gehen und nach Ubuntu suchen. Dieses per __GET__ ins
 
 ![Installing_Ubuntu_on_Control_Machine.png](https://github.com/jonashackt/ansible-linux-windows-workshop/blob/master/Installing_Ubuntu_on_Control_Machine.png)
 
+__Alternative falls Windows Store nicht freigegeben:__ https://docs.microsoft.com/de-de/windows/wsl/install-manual
+
+Distributionen via Powershell herunterladen & installieren:
+
+```
+Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu-1804 -OutFile Ubuntu1804.appx -UseBasicParsing
+Add-AppxPackage .\Ubuntu1804.appx
+```
+
 Nun einen Nutzernamen und Passwort vergeben.
 
 Danach einmal das Package Management updaten:
