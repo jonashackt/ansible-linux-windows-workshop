@@ -164,6 +164,13 @@ sudo apt-get install python-pip
 pip install ansible pywinrm
 ```
 
+Or if you're behind a corporate proxy, your pip also needs the proxy config:
+
+```
+pip install ansible pywinrm --proxy your.proxy.here:port
+```
+
+
 ![Installing_Ansible_on_Control_Machine.png](https://github.com/jonashackt/ansible-linux-windows-workshop/blob/master/Installing_Ansible_on_Control_Machine.png)
 
 
