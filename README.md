@@ -174,6 +174,16 @@ pip install ansible pywinrm --proxy your.proxy.here:port
 ![Installing_Ansible_on_Control_Machine.png](https://github.com/jonashackt/ansible-linux-windows-workshop/blob/master/Installing_Ansible_on_Control_Machine.png)
 
 
+##### Docker auf Windows
+
+See https://docs.docker.com/docker-for-windows/install/
+
+Download Windows installer: https://hub.docker.com/?overlay=onboarding and execute it. Done :)
+
+##### Connect Windows Linux Subsystem (WSL) to Docker Windows Native
+
+Right now, __we have to expose our Windows Docker host without TSL__ to the outside to use Docker Client inside WSL connecting to Docker Daemon running on Windows Docker Native: https://blog.wizardsoftheweb.pro/docker-in-wsl/
+
 ##### Testaufruf des globales Hosentaschen-Rechenzentrums
 
 Auf dem Host jeweils unter `day01/00_Infrastructure-as-Code/Frankfurt` & `day01/00_Infrastructure-as-Code/NewYork` ein `vagrant up` ausführen.
